@@ -2,7 +2,9 @@
 
 import { useState, useTransition } from "react";
 import type { FormResult } from "@/app/actions";
-import { moodColor, moodLabel } from "@/components/event-bits";
+import { PlusIcon } from "@/components/icons";
+import StarBorder from "@/components/reactbits/StarBorder";
+import { moodColor, moodLabel } from "@/lib/mood";
 import { daysInMonth, MONTHS } from "@/lib/dates";
 import { KIND_META, KINDS, type Kind, type PhotoLink } from "@/lib/types";
 
@@ -19,9 +21,8 @@ export type EventFormValues = {
   links: PhotoLink[];
 };
 
-const field =
-  "w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-2 text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-600 focus:outline-none";
-const labelCls = "mb-1.5 block text-sm font-medium text-zinc-300";
+const field = "field";
+const labelCls = "mb-2 block text-sm font-medium text-zinc-200";
 
 export function EventForm({
   initial,
@@ -59,7 +60,7 @@ export function EventForm({
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-6">
+    <form onSubmit={onSubmit} className="panel space-y-7 p-5 sm:p-8">
       {v.id && <input type="hidden" name="id" value={v.id} />}
 
       <div>
@@ -118,12 +119,14 @@ export function EventForm({
           {KINDS.map((k) => (
             <label
               key={k}
-              className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-sm ${
-                v.kind === k ? `border-zinc-500 bg-zinc-800 ${KIND_META[k].text}` : "border-zinc-800 text-zinc-400 hover:border-zinc-700"
+              className={`flex cursor-pointer items-center gap-2 rounded-xl border px-3 py-2.5 text-sm transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#8b7bff]/50 ${
+                v.kind === k
+                  ? `border-white/20 bg-white/[0.07] ${KIND_META[k].text}`
+                  : "border-white/[0.07] text-zinc-400 hover:border-white/15 hover:text-zinc-200"
               }`}
             >
               <input type="radio" name="kind" value={k} checked={v.kind === k} onChange={() => set("kind", k)} className="sr-only" />
-              <span className={`size-2.5 rounded-full ${KIND_META[k].dot}`} />
+              <span className={`size-2.5 rounded-full ${KIND_META[k].dot} ${v.kind === k ? KIND_META[k].glow : ""}`} />
               {KIND_META[k].label}
             </label>
           ))}
@@ -146,7 +149,7 @@ export function EventForm({
           step={1}
           value={v.mood}
           onChange={(e) => set("mood", Number(e.target.value))}
-          className="w-full accent-zinc-200"
+          className="w-full accent-[#8b7bff]"
         />
         <div className="flex justify-between text-xs text-zinc-600"><span>-5 worst</span><span>0</span><span>+5 best</span></div>
       </div>
@@ -207,7 +210,7 @@ export function EventForm({
               <button
                 type="button"
                 onClick={() => setLinks(links.filter((_, j) => j !== i))}
-                className="rounded-lg px-3 text-zinc-500 hover:bg-zinc-900 hover:text-zinc-200"
+                className="rounded-xl px-3 text-zinc-500 hover:bg-white/5 hover:text-zinc-200"
                 aria-label="Remove link"
               >
                 ✕
@@ -218,25 +221,29 @@ export function EventForm({
         <button
           type="button"
           onClick={() => setLinks([...links, { url: "", label: "" }])}
-          className="mt-2 text-sm text-zinc-400 hover:text-zinc-100"
+          className="mt-3 inline-flex items-center gap-1.5 rounded-xl border border-dashed border-white/15 px-3 py-2 text-sm text-zinc-400 transition hover:border-white/30 hover:text-zinc-100"
         >
-          + Add a photo link
+          <PlusIcon className="size-4" />Add a photo link
         </button>
       </div>
 
       {error && (
-        <p className="rounded-lg border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-sm text-rose-200">{error}</p>
+        <p className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-2.5 text-sm text-rose-200">{error}</p>
       )}
 
-      <div className="flex items-center gap-3">
-        <button
+      <div className="flex items-center gap-3 border-t border-white/[0.06] pt-6">
+        <StarBorder
           type="submit"
           disabled={pending}
-          className="rounded-lg bg-zinc-100 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-white disabled:opacity-50"
+          color="#8b7bff"
+          trailColor="#22d3ee"
+          radius={12}
+          duration={5}
+          className="!px-5 !py-2.5 text-sm"
         >
           {pending ? "Saving…" : v.id ? "Save changes" : "Add to timeline"}
-        </button>
-        <button type="button" onClick={() => history.back()} className="text-sm text-zinc-400 hover:text-zinc-100">
+        </StarBorder>
+        <button type="button" onClick={() => history.back()} className="rounded-xl px-3 py-2 text-sm text-zinc-400 hover:bg-white/5 hover:text-zinc-100">
           Cancel
         </button>
       </div>

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { saveEventAction } from "@/app/actions";
+import { HeroAurora } from "@/components/hero-aurora";
 import { EventForm } from "@/components/event-form";
 import { requireOwner } from "@/lib/access";
 import { birthDate, today } from "@/lib/config";
@@ -11,11 +12,16 @@ export const metadata = { title: "Edit memory · Life Timeline" };
 
 export default function EditEventPage(props: PageProps<"/event/[id]/edit">) {
   return (
-    <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8">
-      <h1 className="mb-6 text-2xl font-semibold tracking-tight">Edit memory</h1>
+    <main className="relative isolate w-full flex-1 overflow-hidden">
+      <HeroAurora height="h-[320px]" opacity={0.45} />
+      <div className="mx-auto w-full max-w-2xl px-4 pb-20 pt-12">
+      <p className="eyebrow rise">Life Timeline</p>
+      <h1 className="rise mt-2 text-3xl font-semibold tracking-tight text-white sm:text-4xl">Edit memory</h1>
+      <p className="rise mb-8 mt-2 text-sm text-zinc-400">Change anything. The timeline updates as soon as you save.</p>
       <Suspense fallback={<p className="text-sm text-zinc-500">Loading…</p>}>
         <EditForm params={props.params} />
       </Suspense>
+      </div>
     </main>
   );
 }
