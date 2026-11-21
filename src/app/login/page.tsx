@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { signIn } from "@/auth";
 import { CursorGlow } from "@/components/cursor-glow";
+import { DotBackground } from "@/components/dot-background";
 import { HeroAurora } from "@/components/hero-aurora";
 import { GoogleIcon, LockIcon, PhotoIcon, PulseIcon, TimelineIcon } from "@/components/icons";
 import BlurText from "@/components/reactbits/BlurText";
@@ -42,6 +43,7 @@ export default function LoginPage(props: PageProps<"/login">) {
 
   return (
     <main className="relative isolate flex-1 overflow-hidden">
+      <DotBackground />
       <HeroAurora height="h-[680px]" opacity={0.7} />
       <CursorGlow />
 
