@@ -1,11 +1,10 @@
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { signIn } from "@/auth";
+import { CursorGlow } from "@/components/cursor-glow";
 import { HeroAurora } from "@/components/hero-aurora";
 import { GoogleIcon, LockIcon, PhotoIcon, PulseIcon, TimelineIcon } from "@/components/icons";
 import BlurText from "@/components/reactbits/BlurText";
-import DecryptedText from "@/components/reactbits/DecryptedText";
-import RotatingText from "@/components/reactbits/RotatingText";
 import ShinyText from "@/components/reactbits/ShinyText";
 import SpotlightCard from "@/components/reactbits/SpotlightCard";
 import StarBorder from "@/components/reactbits/StarBorder";
@@ -14,8 +13,6 @@ import { birthDate, ownerName } from "@/lib/config";
 
 export const metadata = { title: "Sign in · Life Timeline" };
 
-const ROTATING_WORDS = ["moment", "memory", "milestone", "adventure"];
-const PILL = "text-white ring-1 ring-inset ring-[#8b7bff]/50 shadow-[0_0_40px_-8px_rgba(139,123,255,0.8)]";
 
 const FEATURES = [
   {
@@ -46,6 +43,7 @@ export default function LoginPage(props: PageProps<"/login">) {
   return (
     <main className="relative isolate flex-1 overflow-hidden">
       <HeroAurora height="h-[680px]" opacity={0.7} />
+      <CursorGlow />
 
       <section className="mx-auto flex w-full max-w-3xl flex-col items-center px-4 pt-20 text-center sm:pt-28">
         <span className="rise inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-xs backdrop-blur">
@@ -59,35 +57,28 @@ export default function LoginPage(props: PageProps<"/login">) {
           className="mt-7 text-4xl font-semibold leading-[1.12] tracking-tight text-white sm:text-6xl"
         >
           <BlurText text={lifeOf} trigger="load" animateBy="words" delay={90} className="justify-center" />
-          {/* "one [moment → memory → milestone → adventure] at a time." */}
-          <span className="rise mt-1 flex flex-wrap items-center justify-center gap-x-[0.25em] [animation-delay:250ms]">
-            <span>one</span>
-            {/* RotatingText calls Math.random() while rendering, so it must not be prerendered. */}
-            <Suspense fallback={<span className={`${PILL} rounded-[0.16em] bg-[#8b7bff]/30 px-[0.28em] py-[0.1em]`}>moment</span>}>
-              <RotatingText
-                texts={ROTATING_WORDS}
-                effect="flip"
-                highlight
-                highlightColor="rgba(139, 123, 255, 0.28)"
-                rotationInterval={2400}
-                staggerDuration={0.025}
-                staggerFrom="first"
-                mainClassName={PILL}
-              />
-            </Suspense>
-            <span>at a time.</span>
+          {/* Still by default; a single soft violet sheen crosses the line on hover. */}
+          <span className="rise mt-1 block [animation-delay:250ms]">
+            <ShinyText
+              text="one moment at a time."
+              trigger="hover"
+              color="#ffffff"
+              shineColor="#a99cff"
+              speed={1.4}
+              shineWidth={30}
+            />
           </span>
         </div>
 
-        <p className="mt-6 max-w-xl text-base leading-relaxed sm:text-lg">
-          <DecryptedText
+        {/* Still by default; a single soft white sheen crosses the sentence on hover. */}
+        <p className="rise mt-6 max-w-xl text-base leading-relaxed sm:text-lg [animation-delay:350ms]">
+          <ShinyText
             text="A personal timeline of milestones, highs, lows and everyday moments, with links to the photos that go with them."
-            animateOn="view"
-            sequential
-            revealDirection="start"
-            speed={18}
-            className="text-zinc-400"
-            encryptedClassName="text-[#8b7bff]/80"
+            trigger="hover"
+            color="#a1a1aa"
+            shineColor="#f4f4f5"
+            speed={1.8}
+            shineWidth={25}
           />
         </p>
 

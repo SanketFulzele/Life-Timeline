@@ -14,6 +14,11 @@ const eslintConfig = defineConfig([
       "react-hooks/set-state-in-effect": "off",
     },
   },
+  // GlowCursor has a local WebGL helper named `use()` that is not React's hook.
+  {
+    files: ["src/components/reactbits/GlowCursor.tsx"],
+    rules: { "react-hooks/rules-of-hooks": "off" },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
