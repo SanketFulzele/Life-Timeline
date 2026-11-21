@@ -22,6 +22,12 @@ export type EventFormValues = {
 };
 
 const field = "field";
+
+/** Drops the day if the month is unknown or doesn't have that many days (e.g. 29 Feb). */
+function clampDay(day: number | "", year: number, month: number | ""): number | "" {
+  if (day === "" || month === "") return "";
+  return day > daysInMonth(year, month) ? "" : day;
+}
 const labelCls = "mb-2 block text-sm font-medium text-zinc-200";
 
 export function EventForm({
@@ -65,20 +71,26 @@ export function EventForm({
 
       <div>
         <span className={labelCls}>When did it happen?</span>
+        {/* Day, Month, Year. The day needs a month first, since month lengths differ. */}
         <div className="grid grid-cols-3 gap-2">
-          <select name="year" value={v.year} onChange={(e) => set("year", Number(e.target.value))} className={field}>
-            {years.map((y) => <option key={y} value={y}>{y}</option>)}
+          <select
+            name="day"
+            aria-label="Day"
+            value={v.day}
+            disabled={v.month === ""}
+            onChange={(e) => set("day", e.target.value === "" ? "" : Number(e.target.value))}
+            className={`${field} disabled:opacity-40`}
+          >
+            <option value="">{v.month === "" ? "Day: pick month" : "Day: not sure"}</option>
+            {Array.from({ length: dayCount }, (_, i) => <option key={i} value={i + 1}>{i + 1}</option>)}
           </select>
           <select
             name="month"
+            aria-label="Month"
             value={v.month}
             onChange={(e) => {
               const month = e.target.value === "" ? "" : Number(e.target.value);
-              setV((old) => ({
-                ...old,
-                month,
-                day: month === "" || (old.day !== "" && old.day > daysInMonth(old.year, month)) ? "" : old.day,
-              }));
+              setV((old) => ({ ...old, month, day: clampDay(old.day, old.year, month) }));
             }}
             className={field}
           >
@@ -86,14 +98,16 @@ export function EventForm({
             {MONTHS.map((name, i) => <option key={name} value={i + 1}>{name}</option>)}
           </select>
           <select
-            name="day"
-            value={v.day}
-            disabled={v.month === ""}
-            onChange={(e) => set("day", e.target.value === "" ? "" : Number(e.target.value))}
-            className={`${field} disabled:opacity-40`}
+            name="year"
+            aria-label="Year"
+            value={v.year}
+            onChange={(e) => {
+              const year = Number(e.target.value);
+              setV((old) => ({ ...old, year, day: clampDay(old.day, year, old.month) }));
+            }}
+            className={field}
           >
-            <option value="">Day: not sure</option>
-            {Array.from({ length: dayCount }, (_, i) => <option key={i} value={i + 1}>{i + 1}</option>)}
+            {years.map((y) => <option key={y} value={y}>{y}</option>)}
           </select>
         </div>
         <p className="mt-1.5 text-xs text-zinc-500">Don&apos;t remember the exact date? Leave month or day as “not sure”.</p>
