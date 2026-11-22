@@ -3,12 +3,10 @@ import Link from "next/link";
 import { signOut } from "@/auth";
 import { PlusIcon } from "@/components/icons";
 import { getViewer } from "@/lib/access";
-import { ownerName, today } from "@/lib/config";
+import { today } from "@/lib/config";
 
 export async function Header() {
   const viewer = await getViewer();
-  const name = ownerName();
-  const title = name === "My" ? "My Life" : `${name}'s Life`;
   const year = today().slice(0, 4);
 
   return (
@@ -23,7 +21,7 @@ export async function Header() {
             className="size-8 drop-shadow-[0_0_10px_rgba(59,89,255,0.5)]"
             priority
           />
-          <span className="font-semibold tracking-tight text-zinc-100 group-hover:text-white">{title}</span>
+          <span className="font-semibold tracking-tight text-zinc-100 group-hover:text-white">Life Timeline</span>
         </Link>
 
         {viewer.canView && (

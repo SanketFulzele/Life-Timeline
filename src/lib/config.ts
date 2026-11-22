@@ -8,10 +8,6 @@ export function birthDate() {
   return value;
 }
 
-export function ownerName() {
-  return process.env.OWNER_NAME || "My";
-}
-
 /**
  * Today's date (YYYY-MM-DD) in your timezone, so the new year appears at your
  * midnight rather than the server's. Call only after reading request data.

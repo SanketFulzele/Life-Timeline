@@ -8,7 +8,7 @@ import GradientText from "@/components/reactbits/GradientText";
 import { StatCard } from "@/components/stat-card";
 import { YearTrack } from "@/components/year-track";
 import { requireViewer } from "@/lib/access";
-import { birthDate, ownerName, today } from "@/lib/config";
+import { birthDate, today } from "@/lib/config";
 import { ageOn, MONTHS, parts } from "@/lib/dates";
 import { listAllEvents } from "@/lib/events";
 import { KIND_META, type EventSummary } from "@/lib/types";
@@ -45,7 +45,6 @@ async function Life() {
   const now = today();
   const birthYear = parts(birth).y;
   const currentYear = parts(now).y;
-  const name = ownerName();
 
   const byYear = new Map<number, EventSummary[]>();
   for (const e of events) {
@@ -74,7 +73,7 @@ async function Life() {
         </p>
         <div role="heading" aria-level={1} className="mt-4">
           <BlurText
-            text={name === "My" ? "My life, so far." : `${name}'s life, so far.`}
+            text="Life Timeline"
             trigger="load"
             delay={110}
             className="text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-6xl"

@@ -6,11 +6,13 @@ import { DotBackground } from "@/components/dot-background";
 import { HeroAurora } from "@/components/hero-aurora";
 import { GoogleIcon, LockIcon, PhotoIcon, PulseIcon, TimelineIcon } from "@/components/icons";
 import BlurText from "@/components/reactbits/BlurText";
+import CountUp from "@/components/reactbits/CountUp";
+import GradientText from "@/components/reactbits/GradientText";
 import ShinyText from "@/components/reactbits/ShinyText";
 import SpotlightCard from "@/components/reactbits/SpotlightCard";
 import StarBorder from "@/components/reactbits/StarBorder";
 import { getViewer } from "@/lib/access";
-import { birthDate, ownerName } from "@/lib/config";
+import { birthDate } from "@/lib/config";
 
 
 const FEATURES = [
@@ -35,9 +37,7 @@ const FEATURES = [
 ];
 
 export default function LoginPage(props: PageProps<"/login">) {
-  const name = ownerName();
   const startYear = birthDate().slice(0, 4);
-  const lifeOf = name === "My" ? "My life," : `${name}'s life,`;
 
   return (
     <main className="relative isolate flex-1 overflow-hidden">
@@ -56,7 +56,7 @@ export default function LoginPage(props: PageProps<"/login">) {
           aria-level={1}
           className="mt-7 text-4xl font-semibold leading-[1.12] tracking-tight text-white sm:text-6xl"
         >
-          <BlurText text={lifeOf} trigger="load" animateBy="words" delay={90} className="justify-center" />
+          <BlurText text="Life Timeline" trigger="load" animateBy="words" delay={90} className="justify-center" />
           {/* Still by default; a single soft violet sheen crosses the line on hover. */}
           <span className="rise mt-1 block [animation-delay:250ms]">
             <ShinyText
@@ -87,7 +87,36 @@ export default function LoginPage(props: PageProps<"/login">) {
         </Suspense>
       </section>
 
-      <section data-safe-x className="mx-auto mt-20 grid w-full max-w-5xl gap-4 px-4 pb-20 sm:mt-28 md:grid-cols-3">
+      {/* What the app is about */}
+      <section data-safe-x className="mx-auto mt-20 w-full max-w-5xl px-4 sm:mt-24">
+        <div className="panel rise relative overflow-hidden px-6 py-10 sm:px-10 sm:py-12">
+          <div className="pointer-events-none absolute -right-24 -top-24 size-64 rounded-full bg-[#8b7bff]/10 blur-3xl" />
+          <div className="relative grid gap-8 md:grid-cols-[1.15fr_1fr] md:items-center">
+            <div>
+              <p className="eyebrow">What this is</p>
+              <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl">
+                <GradientText colors={["#8b7bff", "#22d3ee", "#8b7bff"]} animationSpeed={7}>
+                  Your life, on one line.
+                </GradientText>
+              </h2>
+              <p className="mt-4 max-w-xl text-sm leading-relaxed text-zinc-400 sm:text-base">
+                Life Timeline is a private journal for the moments that made you — the big milestones, the hard
+                days, and the ordinary Tuesdays worth remembering. Every year gets a row, every memory a dot,
+                with photos linked straight from your albums.
+              </p>
+              <p className="mt-3 text-xs text-zinc-500">Only you can see it. Only you can add to it.</p>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <AboutStat value={<CountUp to={365} trigger="view" duration={1.5} />} label="days in a year" />
+              <AboutStat value={<CountUp to={12} trigger="view" duration={1.2} />} label="months per year" />
+              <AboutStat value={<CountUp to={4} trigger="view" duration={1} />} label="kinds of memories" />
+              <AboutStat value={<CountUp to={100} suffix="%" trigger="view" duration={1.4} />} label="yours alone" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section data-safe-x className="mx-auto mt-8 grid w-full max-w-5xl gap-4 px-4 pb-20 sm:mt-10 md:grid-cols-3">
         {FEATURES.map(({ icon: Icon, title, text, color }, i) => (
           <SpotlightCard
             key={title}
@@ -138,6 +167,15 @@ async function SignIn({ searchParams }: { searchParams: PageProps<"/login">["sea
           That Google account isn&apos;t allowed to sign in here.
         </p>
       )}
+    </div>
+  );
+}
+
+function AboutStat({ value, label }: { value: React.ReactNode; label: string }) {
+  return (
+    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] p-4">
+      <div className="text-3xl font-semibold tracking-tight text-white">{value}</div>
+      <div className="mt-1 text-xs text-zinc-500">{label}</div>
     </div>
   );
 }
