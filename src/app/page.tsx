@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <main className="relative isolate w-full flex-1 overflow-hidden">
       <HeroAurora />
-      <div className="mx-auto w-full max-w-5xl px-4 pb-20 pt-14 sm:pt-20">
+      <div data-safe-x className="mx-auto w-full max-w-5xl px-4 pb-20 pt-14 sm:pt-20">
         <Suspense fallback={<HomeSkeleton />}>
           <Life />
         </Suspense>

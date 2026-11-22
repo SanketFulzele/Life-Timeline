@@ -18,7 +18,7 @@ export default function EventPage(props: PageProps<"/event/[id]">) {
   return (
     <main className="relative isolate w-full flex-1 overflow-hidden">
       <HeroAurora height="h-[360px]" opacity={0.45} />
-      <div className="mx-auto w-full max-w-3xl px-4 pb-20 pt-10">
+      <div data-safe-x className="mx-auto w-full max-w-3xl px-4 pb-20 pt-10">
         <Suspense fallback={<div className="h-60 animate-pulse rounded-2xl bg-white/[0.03]" />}>
           <EventView params={props.params} />
         </Suspense>

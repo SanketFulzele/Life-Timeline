@@ -12,8 +12,6 @@ import StarBorder from "@/components/reactbits/StarBorder";
 import { getViewer } from "@/lib/access";
 import { birthDate, ownerName } from "@/lib/config";
 
-export const metadata = { title: "Sign in · Life Timeline" };
-
 
 const FEATURES = [
   {
@@ -47,7 +45,7 @@ export default function LoginPage(props: PageProps<"/login">) {
       <HeroAurora height="h-[680px]" opacity={0.7} />
       <CursorGlow />
 
-      <section className="mx-auto flex w-full max-w-3xl flex-col items-center px-4 pt-20 text-center sm:pt-28">
+      <section data-safe-x className="mx-auto flex w-full max-w-3xl flex-col items-center px-4 pt-20 text-center sm:pt-28">
         <span className="rise inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-xs backdrop-blur">
           <LockIcon className="size-3.5 text-zinc-400" />
           <ShinyText text={`Private journal · ${startYear} → today`} color="#a1a1aa" shineColor="#ffffff" speed={3} />
@@ -89,7 +87,7 @@ export default function LoginPage(props: PageProps<"/login">) {
         </Suspense>
       </section>
 
-      <section className="mx-auto mt-20 grid w-full max-w-5xl gap-4 px-4 pb-20 sm:mt-28 md:grid-cols-3">
+      <section data-safe-x className="mx-auto mt-20 grid w-full max-w-5xl gap-4 px-4 pb-20 sm:mt-28 md:grid-cols-3">
         {FEATURES.map(({ icon: Icon, title, text, color }, i) => (
           <SpotlightCard
             key={title}

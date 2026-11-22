@@ -15,7 +15,7 @@ export default function YearPage(props: PageProps<"/year/[year]">) {
   return (
     <main className="relative isolate w-full flex-1 overflow-hidden">
       <HeroAurora height="h-[380px]" opacity={0.5} />
-      <div className="mx-auto w-full max-w-5xl px-4 pb-20 pt-10">
+      <div data-safe-x className="mx-auto w-full max-w-5xl px-4 pb-20 pt-10">
         <Suspense fallback={<div className="h-40 animate-pulse rounded-2xl bg-white/[0.03]" />}>
           <Year params={props.params} />
         </Suspense>

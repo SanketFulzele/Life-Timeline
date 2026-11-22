@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { signOut } from "@/auth";
 import { PlusIcon } from "@/components/icons";
@@ -11,13 +12,17 @@ export async function Header() {
   const year = today().slice(0, 4);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/[0.06] bg-[#07070a]/70 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between gap-3 px-4">
+    <header data-safe-top className="sticky top-0 z-40 border-b border-white/[0.06] bg-[#07070a]/70 backdrop-blur-xl">
+      <div data-safe-x className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between gap-3 px-4">
         <Link href="/" className="group flex items-center gap-2.5">
-          <span className="relative flex size-7 items-center justify-center rounded-lg bg-gradient-to-br from-[#8b7bff] to-[#22d3ee] shadow-[0_0_24px_-4px_rgba(139,123,255,0.7)]">
-            <span className="h-3.5 w-px bg-white/90" />
-            <span className="absolute size-1.5 rounded-full bg-white" />
-          </span>
+          <Image
+            src="/images/lifetimeline.png"
+            alt=""
+            width={32}
+            height={32}
+            className="size-8 drop-shadow-[0_0_10px_rgba(59,89,255,0.5)]"
+            priority
+          />
           <span className="font-semibold tracking-tight text-zinc-100 group-hover:text-white">{title}</span>
         </Link>
 
@@ -60,7 +65,7 @@ export async function Header() {
 export function Footer() {
   return (
     <footer className="border-t border-white/[0.05]">
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3 px-4 py-6 text-xs text-zinc-600">
+      <div data-safe-x data-safe-bottom className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3 px-4 py-6 text-xs text-zinc-600">
         <span>Life Timeline</span>
         <span>Private · only you can edit</span>
       </div>

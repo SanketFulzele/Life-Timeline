@@ -14,7 +14,7 @@ export default function EditEventPage(props: PageProps<"/event/[id]/edit">) {
   return (
     <main className="relative isolate w-full flex-1 overflow-hidden">
       <HeroAurora height="h-[320px]" opacity={0.45} />
-      <div className="mx-auto w-full max-w-2xl px-4 pb-20 pt-12">
+      <div data-safe-x className="mx-auto w-full max-w-2xl px-4 pb-20 pt-12">
       <p className="eyebrow rise">Life Timeline</p>
       <h1 className="rise mt-2 text-3xl font-semibold tracking-tight text-white sm:text-4xl">Edit memory</h1>
       <p className="rise mb-8 mt-2 text-sm text-zinc-400">Change anything. The timeline updates as soon as you save.</p>
